@@ -17,8 +17,26 @@ pipe = pipeline(
     device_map=device
 )
 
-def ask_question(message):
+message = [
+    {
+        "role": "system",
+        "content": """
+        You are a friendly chatbot named Chatty
+        """
+    },
+    {
+        "role": "user", 
+        "content": """
+        Please introduce yourself and add
+        'how can I help you today?' at
+        the end of the response
+        """
+    }
+]
+
+def ask_question(msg):
     # Generate response from deepseek model
+    message[1]["content"] = msg
     response = pipe(
         message, 
         max_new_tokens=2048
